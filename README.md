@@ -19,5 +19,5 @@ Project Laravel untuk mengelola data karyawan dan departemen menggunakan Eloquen
 
 
 # Dibuat Oleh
-Nama : Ilham Fattahillah Elandi
+Nama : Ilham Fattahillah Elandi<br>
 Kelas : XI RPL 3
