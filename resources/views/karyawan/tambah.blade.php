@@ -21,6 +21,27 @@
             <label for="posisi" class="block text-sm font-medium text-slate-700 mb-2">Posisi</label>
             <input type="text" name="posisi" id="posisi" placeholder="Masukkan posisi karyawan" class="w-full px-4 py-2 border border-blue-300 rounded-md duration-200" required>
         </div>
+
+        <div class="mb-5">
+            <label class="block text-sm font-medium text-slate-600 mb-1">
+                Departemen
+            </label>
+
+            <select 
+                name="departemen_id"
+                class="w-full px-4 py-2 rounded-xl border border-slate-300 
+                    focus:ring-2 focus:ring-indigo-400 outline-none">
+
+                <option value="">-- Pilih Departemen --</option>
+
+                @foreach ($departemen as $d)
+                    <option value="{{ $d->id }}">
+                        {{ $d->nama_departemen }}
+                    </option>
+                @endforeach
+
+            </select>
+        </div>
         
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 cursor-pointer">
             Tambah Karyawan

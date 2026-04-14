@@ -17,23 +17,36 @@
     </div>
 
     <!-- SEARCH -->
-    <form method="GET" action="{{ route('karyawan') }}" 
-          class="mb-6 flex gap-3 items-center bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+    <form method="GET" action="{{ route('karyawan') }}" class="mb-6 flex gap-3">
 
-        <input 
-            type="text" 
-            name="search" 
-            placeholder="Cari nama / posisi..." 
-            value="{{ request('search') }}"
-            class="w-full px-4 py-2 rounded-xl outline-none"
-        >
+        <select name="kategori" class="px-3 py-2 rounded-xl border border-slate-300">
 
-        <button 
-            type="submit" 
-            class="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700 transition">
-            Cari
-        </button>
-    </form>
+        <option value="nama" {{ request('kategori') == 'nama' ? 'selected' : '' }}>
+            Nama
+        </option>
+
+        <option value="posisi" {{ request('kategori') == 'posisi' ? 'selected' : '' }}>
+            Posisi
+        </option>
+
+        <option value="departemen" {{ request('kategori') == 'departemen' ? 'selected' : '' }}>
+            Departemen
+        </option>
+
+        </select>
+
+    <input 
+        type="text" 
+        name="search" 
+        placeholder="Cari..." 
+        value="{{ request('search') }}"
+        class="w-full px-4 py-2 rounded-xl border border-slate-300">
+
+    <button class="bg-slate-800 text-white px-5 py-2 rounded-xl">
+        Cari
+    </button>
+
+</form>
 
     <!-- TABLE -->
     <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-slate-200">

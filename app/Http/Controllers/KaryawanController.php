@@ -8,22 +8,41 @@ use App\Models\Departemen;
 
 class KaryawanController extends Controller
 {
-    // READ
+    // READ + SEARCH + PAGINATION
     public function index(Request $request)
-{
-    $search = $request->search;
+    {
+        $search = $request->search;
+        $kategori = $request->kategori;
 
-    $karyawan = Karyawan::with('departemen')
-        ->when($search, function ($query, $search) {
-            return $query->where('nama', 'like', "%$search%");
-        })
-        ->paginate(5);
+        $karyawan = Karyawan::with('departemen')
+            ->when($search, function ($query) use ($search, $kategori) {
 
-    return view('karyawan.index', compact('karyawan'));
-}
+        if ($kategori == 'nama') {
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        elseif ($kategori == 'posisi') {
+            $query->where('posisi', 'like', "%$search%");
+        }
+
+        elseif ($kategori == 'departemen') {
+            $query->whereHas('departemen', function ($q) use ($search) {
+                $q->where('nama_departemen', 'like', "%$search%");
+            });
+        }
+
+    })
+    ->paginate(5);
+
+        return view('karyawan.index', compact('karyawan'));
+    }
+
+    // FORM TAMBAH
     public function show()
     {
-        return view('karyawan.tambah');
+        $departemen = Departemen::all();
+
+        return view('karyawan.tambah', compact('departemen'));
     }
 
     // CREATE
@@ -31,17 +50,20 @@ class KaryawanController extends Controller
     {
         $validatedData = $request->validate([
             'nama' => 'required',
-            'posisi' => 'required'
+            'posisi' => 'required',
+            'departemen_id' => 'required'
         ]);
-    
+
         Karyawan::create([
             'nama' => $validatedData['nama'],
-            'posisi' => $validatedData['posisi']
+            'posisi' => $validatedData['posisi'],
+            'departemen_id' => $validatedData['departemen_id']
         ]);
 
         return redirect('/karyawan');
     }
 
+    // FORM EDIT
     public function edit($id)
     {
         $karyawan = Karyawan::findOrFail($id);
@@ -49,6 +71,7 @@ class KaryawanController extends Controller
 
         return view('karyawan.edit', compact('karyawan', 'departemen'));
     }
+
     // UPDATE
     public function update(Request $request, $id)
     {
@@ -56,14 +79,16 @@ class KaryawanController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'posisi' => 'required'
+            'posisi' => 'required',
+            'departemen_id' => 'required'
         ]);
-        
+
         $karyawan->update([
-        'nama' => $request->nama,
-        'posisi' => $request->posisi,
-        'departemen_id' => $request->departemen_id
+            'nama' => $request->nama,
+            'posisi' => $request->posisi,
+            'departemen_id' => $request->departemen_id
         ]);
+
         return redirect('/karyawan');
     }
 
@@ -74,6 +99,4 @@ class KaryawanController extends Controller
 
         return redirect('/karyawan');
     }
-
-
 }
