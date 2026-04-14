@@ -17,6 +17,7 @@ Project Laravel untuk mengelola data karyawan dan departemen menggunakan Eloquen
 ## Halaman Edit Data
 <img width="1918" height="960" alt="image" src="https://github.com/user-attachments/assets/6bcb81f5-98f8-44cc-b3cd-4d696ed9e0ff" />
 
-#Dibuat Oleh
+
+# Dibuat Oleh
 Nama : Ilham Fattahillah Elandi
 Kelas : XI RPL 3
